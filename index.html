@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>John Schlichting, Aerospace Engineer</title>
+<meta name="description" content="Aerospace engineer from CU Boulder. I design, build, and flight-test aircraft: tail sizing and stability, CNC fabrication, and flight test analysis.">
+<meta property="og:title" content="John Schlichting, Aerospace Engineer">
+<meta property="og:description" content="Design it. Build it. Fly it. Fix what the model missed.">
+<meta property="og:image" content="https://johnschlichting.com/tail.jpeg">
+<meta property="og:url" content="https://johnschlichting.com">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230E1B2C'/%3E%3Cpath d='M6 19 L26 13 L26 16 L6 22 Z' fill='%23F04A00'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&display=swap" rel="stylesheet">
+<style>
+/* Color language: blue = the model / analysis, orange = what actually flew. */
+:root{
+  --paper:#F2F4F6;
+  --panel:#FFFFFF;
+  --ink:#0E1B2C;
+  --ink-2:#4A5869;
+  --rule:#CDD5DE;
+  --model:#3F6FA3;
+  --flight:#F04A00;
+  --flight-ink:#B83800;
+  --tint:#E3E9EF;
+  --ok:#2F9E5B;
+  --maxw:1180px;
+  --gutter:clamp(16px,4vw,40px);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#0C141E;
+    --panel:#121D2A;
+    --ink:#E7ECF2;
+    --ink-2:#9AA8B8;
+    --rule:#26364A;
+    --model:#7FA6D3;
+    --flight:#FF6A26;
+    --flight-ink:#FF8A55;
+    --tint:#172435;
+    --ok:#5BC98A;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Archivo",system-ui,sans-serif;font-size:17px;line-height:1.55;
+  font-variation-settings:"wdth" 100;-webkit-font-smoothing:antialiased;
+}
+img,video{max-width:100%;display:block}
+a{color:inherit;text-decoration-color:var(--flight);text-underline-offset:3px;text-decoration-thickness:2px}
+a:hover{color:var(--flight-ink)}
+:focus-visible{outline:3px solid var(--flight);outline-offset:3px;border-radius:2px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter)}
+.num{font-variant-numeric:tabular-nums}
+svg text{font-family:"Archivo",system-ui,sans-serif}
+[hidden]{display:none!important}
+
+/* ---------- Nav ---------- */
+.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
+.brand{font-weight:800;font-variation-settings:"wdth" 118;letter-spacing:-.01em;text-decoration:none;font-size:17px;white-space:nowrap}
+.nav ul{display:flex;gap:clamp(12px,2.6vw,28px);list-style:none;margin:0;padding:0;align-items:center}
+.nav ul a{text-decoration:none;font-weight:500;font-size:15px;color:var(--ink-2)}
+.nav ul a:hover{color:var(--ink)}
+.nav .resume-link{color:var(--ink);border:1.5px solid var(--ink);padding:6px 12px;border-radius:999px}
+@media (max-width:560px){.nav .hide-sm{display:none}}
+
+/* ---------- Hero ---------- */
+.hero{padding:clamp(32px,6vw,80px) 0 clamp(28px,4vw,48px)}
+.hero-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(24px,4vw,64px);align-items:end}
+@media (max-width:860px){.hero-grid{grid-template-columns:1fr}}
+.hero h1{margin:0;font-weight:850;font-variation-settings:"wdth" 125;font-size:clamp(38px,5.3vw,72px);line-height:.96;letter-spacing:-.025em}
+.hero h1 span{display:block}
+.hero h1 .last{color:var(--flight)}
+.hero .lede{font-size:clamp(17px,1.5vw,19px);color:var(--ink-2);max-width:34em;margin:0 0 24px}
+.hero .lede strong{color:var(--ink);font-weight:600}
+.hero .lede a{color:var(--ink);font-weight:600}
+.cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;font:inherit;font-weight:650;font-size:16px;padding:12px 20px;border-radius:999px;text-decoration:none;cursor:pointer;border:1.5px solid var(--ink);background:transparent;color:var(--ink)}
+.btn.primary{background:var(--flight);border-color:var(--flight);color:#0E1B2C}
+.btn.primary:hover{background:#FF5E1A;color:#0E1B2C}
+.btn:hover{color:var(--ink)}
+.status{margin-top:22px;font-size:15px;color:var(--ink-2);display:flex;gap:8px;align-items:center}
+.status .dot{width:9px;height:9px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px color-mix(in srgb,var(--ok) 22%,transparent)}
+
+
+/* ---------- Work: tabs ---------- */
+#work{scroll-margin-top:60px}
+.work-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:20px;padding-top:clamp(24px,4vw,40px);border-top:1px solid var(--rule)}
+.work-head h2{margin:0;font-weight:800;font-variation-settings:"wdth" 120;font-size:clamp(28px,3.6vw,44px);letter-spacing:-.02em;line-height:1.05}
+.work-head p{margin:6px 0 0;color:var(--ink-2);max-width:34em}
+
+.mode{display:grid;grid-template-columns:1fr 1fr;border:1.5px solid var(--ink);border-radius:14px;padding:4px;gap:4px;min-width:min(100%,420px)}
+.mode button{font:inherit;text-align:left;border:0;background:transparent;color:var(--ink);padding:9px 12px;border-radius:10px;cursor:pointer;line-height:1.25}
+.mode button b{display:block;font-size:15px;font-weight:700}
+.mode button span{font-size:13px;color:var(--ink-2)}
+.mode button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.mode button[aria-pressed="true"] span{color:color-mix(in srgb,var(--paper) 75%,transparent)}
+
+.tabbar{position:sticky;top:60px;z-index:10;background:var(--paper);margin-top:24px;border-bottom:1px solid var(--rule)}
+.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{font:inherit;flex:0 0 auto;text-align:left;border:0;background:transparent;color:var(--ink-2);padding:12px 14px 13px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px;line-height:1.25}
+.tabs button b{display:block;font-size:15px;font-weight:700;color:var(--ink)}
+.tabs button span{font-size:13px}
+.tabs button[aria-selected="true"]{border-bottom-color:var(--flight)}
+.tabs button[aria-selected="true"] span{color:var(--flight-ink)}
+.tabs button:hover b{color:var(--flight-ink)}
+
+/* Panels */
+.project{padding:clamp(28px,4vw,48px) 0 0;outline:none}
+.p-head{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(20px,4vw,56px);align-items:start}
+.p-head h3{margin:0 0 8px;font-weight:800;font-variation-settings:"wdth" 118;font-size:clamp(28px,3.8vw,46px);line-height:1.02;letter-spacing:-.02em}
+.p-meta{color:var(--ink-2);font-size:15px;margin:0 0 16px}
+.p-pitch{font-size:clamp(18px,1.7vw,21px);line-height:1.5;margin:0;max-width:36em}
+.role{background:var(--panel);border:1px solid var(--rule);border-left:4px solid var(--flight);border-radius:10px;padding:16px 18px}
+.role h4{margin:0 0 4px;font-size:14px;font-weight:600;color:var(--ink-2)}
+.role p{margin:0;font-weight:600;font-size:17px;line-height:1.4}
+.specs{display:grid;grid-template-columns:repeat(6,1fr);margin:28px 0 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.specs div{padding:14px 12px 14px 0}
+.specs dt{font-size:13px;color:var(--ink-2)}
+.specs dd{margin:2px 0 0;font-size:clamp(18px,1.8vw,22px);font-weight:700;font-variation-settings:"wdth" 108;font-variant-numeric:tabular-nums}
+@media (max-width:860px){.p-head{grid-template-columns:1fr}.specs{grid-template-columns:repeat(3,1fr)}}
+
+/* Summary view */
+.sum{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(20px,4vw,48px);margin-top:28px;align-items:start}
+.sum img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;background:var(--tint);cursor:zoom-in}
+.sum h4{margin:0 0 12px;font-size:16px;font-weight:700}
+.takeaways{list-style:none;margin:0;padding:0}
+.takeaways li{padding:12px 0 12px 22px;border-top:1px solid var(--rule);position:relative}
+.takeaways li:first-child{border-top:0;padding-top:0}
+.takeaways li::before{content:"";position:absolute;left:0;top:20px;width:9px;height:9px;border-radius:50%;background:var(--flight)}
+.takeaways li:first-child::before{top:8px}
+.takeaways b{font-weight:650}
+.deeper{margin-top:20px}
+@media (max-width:860px){.sum{grid-template-columns:1fr}}
+
+/* Full view building blocks */
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,3vw,36px);margin-top:32px}
+.three h4{margin:0 0 8px;font-size:16px;font-weight:700}
+.three ul{margin:0;padding-left:18px}
+.three li{margin-bottom:6px}
+.three p{margin:0}
+@media (max-width:860px){.three{grid-template-columns:1fr}}
+.quote{margin:32px 0 0;padding:18px 0 0;border-top:1px solid var(--rule);font-size:clamp(18px,1.8vw,22px);font-weight:500;max-width:40em}
+.quote cite{display:block;font-style:normal;font-size:14px;color:var(--ink-2);margin-top:6px}
+
+.instruments{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;margin-top:32px}
+.instruments.alt{grid-template-columns:1fr 1.3fr}
+@media (max-width:900px){.instruments,.instruments.alt{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--rule);border-radius:14px;padding:clamp(16px,2.4vw,24px)}
+.panel h4{margin:0 0 4px;font-size:17px;font-weight:700}
+.panel .sub{margin:0 0 14px;color:var(--ink-2);font-size:15px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--ink-2);margin-top:10px}
+.legend i{display:inline-block;width:18px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
+
+.sm-svg{width:100%;height:auto;overflow:visible}
+.sm-read{display:flex;flex-wrap:wrap;gap:6px 22px;align-items:baseline;margin:6px 0 8px}
+.sm-read .big{font-size:40px;font-weight:800;font-variation-settings:"wdth" 112;line-height:1}
+.sm-read .zone{font-weight:600}
+.sm-note{font-size:15px;color:var(--ink-2);min-height:3em;margin:0 0 12px}
+input[type=range]{width:100%;accent-color:var(--flight);height:28px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.linkbtn{font:inherit;font-size:15px;font-weight:650;background:none;border:0;color:var(--ink);text-decoration:underline;text-decoration-color:var(--flight);text-underline-offset:4px;text-decoration-thickness:2px;cursor:pointer;padding:4px 0}
+.linkbtn:hover{color:var(--flight-ink)}
+
+.gauge{margin:14px 0 18px}
+.gauge .lbl{display:flex;justify-content:space-between;font-size:15px;margin-bottom:6px}
+.gauge .lbl b{font-variant-numeric:tabular-nums}
+.track{position:relative;height:12px;border-radius:6px;background:var(--tint)}
+.band{position:absolute;top:0;bottom:0;background:color-mix(in srgb,var(--model) 30%,transparent);border-radius:6px}
+.mark{position:absolute;top:-5px;width:4px;height:22px;background:var(--flight);border-radius:2px;transform:translateX(-2px)}
+.ticks{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-2);margin-top:4px;font-variant-numeric:tabular-nums}
+
+.log{list-style:none;margin:0;padding:0}
+.log li{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:12px 0;border-top:1px solid var(--rule)}
+.log li:first-child{border-top:0;padding-top:0}
+.log .n{font-weight:800;font-variation-settings:"wdth" 112;font-size:15px;white-space:nowrap}
+.log .n small{display:block;font-weight:600;font-size:12px;color:var(--ok)}
+.log .n small.warn{color:var(--flight-ink)}
+.log p{margin:0;font-size:15px}
+
+.glide-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:clamp(18px,3vw,36px);align-items:center}
+@media (max-width:900px){.glide-grid{grid-template-columns:1fr}}
+.glide svg{width:100%;height:auto}
+.gap-stat{font-size:clamp(44px,6vw,72px);font-weight:850;font-variation-settings:"wdth" 120;line-height:.95;letter-spacing:-.02em;color:var(--flight)}
+.gap-stat + p{margin:6px 0 16px;color:var(--ink-2)}
+.why{margin:0;padding-left:18px}
+.why li{margin-bottom:6px}
+
+.media{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:28px}
+.media figure{margin:0}
+.media img{width:100%;height:100%;object-fit:cover;border-radius:12px;background:var(--tint);cursor:zoom-in}
+.media .fit img{object-fit:contain;background:var(--tint)}
+.media video{width:100%;border-radius:12px;background:#000;aspect-ratio:16/9;object-fit:contain}
+.media .frame{aspect-ratio:4/3;overflow:hidden;border-radius:12px}
+.media figcaption{font-size:13px;color:var(--ink-2);margin-top:6px}
+.s4{grid-column:span 4}.s6{grid-column:span 6}.s12{grid-column:span 12}
+.s8{grid-column:span 8}
+@media (max-width:760px){.s4,.s6{grid-column:span 12}}
+
+.writeup{margin-top:32px;border-top:1px solid var(--rule);padding-top:24px}
+.writeup > h4{margin:0 0 16px;font-size:18px;font-weight:700}
+.writeup .cols{columns:2 340px;column-gap:40px}
+.writeup .cols > div{break-inside:avoid;margin-bottom:18px}
+.writeup h5{margin:0 0 4px;font-size:15px;font-weight:700}
+.writeup p{margin:0;font-size:16px;color:var(--ink-2)}
+.writeup p strong{color:var(--ink);font-weight:600}
+
+.figrow{display:flex;flex-wrap:wrap;gap:22px;margin-top:4px}
+.figrow div{min-width:96px;max-width:170px}
+.figrow b{display:block;font-size:26px;font-weight:800;font-variation-settings:"wdth" 110;font-variant-numeric:tabular-nums;line-height:1.1}
+.figrow span{font-size:13px;color:var(--ink-2)}
+.wip-card{background:var(--ink);color:var(--paper);border-radius:14px;padding:clamp(20px,3vw,32px);margin-top:28px}
+.wip-card p{margin:0;max-width:44em}
+@media (prefers-color-scheme: dark){.wip-card{background:var(--panel);color:var(--ink);border:1px solid var(--rule)}}
+.next{display:flex;justify-content:space-between;gap:16px;margin-top:40px;padding-top:18px;border-top:1px solid var(--rule)}
+
+/* Mode visibility */
+body[data-mode="summary"] .full{display:none!important}
+body[data-mode="full"] .summary-only{display:none!important}
+
+/* ---------- Skills ---------- */
+.band-sec{padding:clamp(56px,8vw,104px) 0 0}
+.sec-title{margin:0 0 8px;font-weight:800;font-variation-settings:"wdth" 120;font-size:clamp(26px,3.2vw,38px);letter-spacing:-.02em;line-height:1.05}
+.sec-sub{margin:0 0 24px;color:var(--ink-2)}
+.skills{width:100%;border-collapse:collapse}
+.skills th,.skills td{text-align:left;vertical-align:top;padding:16px 16px 16px 0;border-top:1px solid var(--rule)}
+.skills thead th{font-size:13px;font-weight:600;color:var(--ink-2);border-top:0;padding-top:0;padding-bottom:10px}
+.skills tbody th{font-size:17px;font-weight:700;width:22%}
+.skills td.items{width:54%}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font-size:14px;background:var(--panel);border:1px solid var(--rule);padding:4px 10px;border-radius:7px;line-height:1.4}
+.proof{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:15px}
+.proof a{font-weight:600}
+@media (max-width:760px){
+  .skills thead{display:none}
+  .skills tr{display:block;border-top:1px solid var(--rule);padding:16px 0}
+  .skills th,.skills td{display:block;border:0;padding:0;width:auto!important}
+  .skills tbody th{margin-bottom:10px}
+  .skills td.used{margin-top:12px}
+  .skills td.used::before{content:"Used in";display:block;font-size:13px;color:var(--ink-2);margin-bottom:4px}
+}
+
+/* ---------- About & contact ---------- */
+.about{display:grid;grid-template-columns:.8fr 1.4fr;gap:clamp(20px,4vw,48px);align-items:center}
+.about img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:14px;background:var(--tint);cursor:zoom-in}
+.about p{margin:0 0 14px;font-size:18px;max-width:38em}
+.about p:last-child{margin-bottom:0}
+@media (max-width:760px){.about{grid-template-columns:1fr}.about img{aspect-ratio:16/10;max-height:340px}}
+.contact{margin-top:clamp(56px,8vw,104px);padding:clamp(40px,6vw,72px) 0;border-top:1px solid var(--rule)}
+.contact h2{margin:0 0 14px;font-weight:850;font-variation-settings:"wdth" 125;font-size:clamp(34px,5.4vw,68px);letter-spacing:-.025em;line-height:1}
+.contact p{color:var(--ink-2);margin:0 0 24px;font-size:18px}
+footer{padding:20px 0 40px;color:var(--ink-2);font-size:14px}
+
+dialog.lb{border:0;padding:0;background:transparent;max-width:min(1200px,94vw);max-height:92vh}
+dialog.lb::backdrop{background:rgba(6,12,20,.86)}
+dialog.lb img{max-height:84vh;width:auto;border-radius:10px;margin:0 auto}
+dialog.lb p{color:#E7ECF2;text-align:center;font-size:14px;margin:10px 0 0}
+dialog.lb button{position:fixed;top:16px;right:16px;font:inherit;font-weight:600;background:#fff;color:#0E1B2C;border:0;border-radius:999px;padding:8px 14px;cursor:pointer}
+</style>
+</head>
+<body data-mode="summary">
+
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="#top">John Schlichting</a>
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li class="hide-sm"><a href="#skills">Skills</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a class="resume-link" href="https://johnschlichting.com/JRS_Resume1.pdf" target="_blank" rel="noopener">Resume</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="top">
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <h1><span>Design it.</span><span>Build it.</span><span class="last">Fly it.</span></h1>
+    <div>
+      <p class="lede">I recently graduated from CU Boulder in Integrated Design Engineering with an Aerospace concentration, and I&rsquo;ve built and flown two aircraft with my teams. The latest was my senior design project, the <a href="#work" data-open="mte">MTE demonstrator</a>, where I <strong>owned the full tail from sizing to first flight</strong>. Now I&rsquo;m building my own <a href="#work" data-open="tunnel">sub scale wind tunnel</a> at home.</p>
+      <div class="cta">
+        <a class="btn primary" href="#work" data-open="mte">See my projects</a>
+        <a class="btn" href="https://johnschlichting.com/JRS_Resume1.pdf" target="_blank" rel="noopener">Download resume</a>
+      </div>
+      <p class="status"><span class="dot" aria-hidden="true"></span>Available now. Open to relocation.</p>
+    </div>
+  </div>
+</header>
+
+<section id="work" aria-labelledby="work-title">
+  <div class="wrap">
+    <div class="work-head">
+      <div>
+        <h2 id="work-title">Selected work</h2>
+        <p>Five projects taken from a blank page to something that flew, worked, or had a business case, plus what I&rsquo;m building now.</p>
+      </div>
+      <div class="mode" role="group" aria-label="How much detail to show">
+        <button type="button" data-mode="summary" aria-pressed="true"><b>Summary</b><span>30 second read per project</span></button>
+        <button type="button" data-mode="full" aria-pressed="false"><b>Engineering deep dive</b><span>Analysis, data, and process</span></button>
+      </div>
+    </div>
+
+    <div class="tabbar">
+      <div class="tabs" role="tablist" aria-label="Projects">
+        <button role="tab" id="tab-mte" aria-controls="mte" aria-selected="true" tabindex="0"><b>MTE demonstrator</b><span>Senior design, 2026</span></button>
+        <button role="tab" id="tab-glider" aria-controls="glider" aria-selected="false" tabindex="-1"><b>Fixed-wing glider</b><span>Design lab, 2024</span></button>
+        <button role="tab" id="tab-step2it" aria-controls="step2it" aria-selected="false" tabindex="-1"><b>Step2It cane</b><span>Product and business, 2025</span></button>
+        <button role="tab" id="tab-cordkeeper" aria-controls="cordkeeper" aria-selected="false" tabindex="-1"><b>Cord Keeper Pro</b><span>Medical device, 2024</span></button>
+        <button role="tab" id="tab-pinball" aria-controls="pinball" aria-selected="false" tabindex="-1"><b>Self powered pinball</b><span>Embedded, 2023</span></button>
+        <button role="tab" id="tab-tunnel" aria-controls="tunnel" aria-selected="false" tabindex="-1"><b>Home wind tunnel</b><span>In progress</span></button>
+      </div>
+    </div>
+
+    <!-- ===================== MTE ===================== -->
+    <article class="project" id="mte" role="tabpanel" aria-labelledby="tab-mte" tabindex="-1">
+      <div class="p-head">
+        <div>
+          <h3>Morphing Trailing Edge demonstrator</h3>
+          <p class="p-meta">Smead Aerospace senior design, Prototype Team, 2025&ndash;2026</p>
+          <p class="p-pitch">A sub scale RC aircraft built to prove a morphing trailing edge works as a high lift device, part of a clean sheet transport concept targeting 50% better fuel efficiency than the 737 MAX&nbsp;8.</p>
+        </div>
+        <div class="role"><h4>My role</h4><p>I was responsible for the the complete tail system, from sizing, stability analysis, CAD and hand fabrication of the entire empennage.</p></div>
+      </div>
+      <dl class="specs">
+        <div><dt>Wingspan</dt><dd>2.15 m</dd></div>
+        <div><dt>Mass</dt><dd>4.1 kg</dd></div>
+        <div><dt>Aspect ratio</dt><dd>6.82</dd></div>
+        <div><dt>Stall speed</dt><dd>9.8 m/s</dd></div>
+        <div><dt>Static margin</dt><dd>~18%</dd></div>
+        <div><dt>Succesful Flights</dt><dd>3</dd></div>
+      </dl>
+
+      <div class="sum summary-only">
+        <img src="https://johnschlichting.com/flight.jpeg" alt="The MTE demonstrator in flight" data-zoom loading="lazy" style="aspect-ratio:auto;height:auto">
+        <div>
+          <h4>Key takeaways</h4>
+          <ul class="takeaways">
+            <li><b>Designed for a safe first flight.</b> Sized the vertical tail to favor a correctable spiral over Dutch roll, and accepted ~18% static margin over the 15% target.</li>
+            <li><b>Built every part of the tail myself,</b> from CNC cut NACA 0012 foam surfaces to a basswood and carbon fiber empennage box.</li>
+            <li><b>Three successful flights,</b> ending with the first in flight MTE deflection. The test pilot called it the best handling senior project airplane he&rsquo;d flown.</li>
+            <li><b>MTE validated in the wind wall:</b> over 100% C<sub>L</sub> increase at 0&deg; AoA.</li>
+          </ul>
+          <div class="deeper"><button class="linkbtn" type="button" data-go="full">See the stability analysis and flight data</button></div>
+        </div>
+      </div>
+
+      <div class="full">
+        <div class="three">
+          <div>
+            <h4>What I did</h4>
+            <ul>
+              <li>Sized both stabilizers with volume coefficients: V<sub>H</sub> = 0.685, V<sub>V</sub> = 0.0403</li>
+              <li>Set CG at 0.43&nbsp;m against a neutral point at 0.487&nbsp;m over a 0.315&nbsp;m MAC</li>
+              <li>Fabricated NACA 0012 surfaces surfaces on a 4-axis CNC foam cutter</li>
+              <li>Built the basswood and carbon fiber empennage box by hand</li>
+            </ul>
+          </div>
+          <div>
+            <h4>The call I made</h4>
+            <p>I designed the tail to favor spiral instability over Dutch roll. A spiral is a slow, tightening descending turn, and a pilot can fix it with basic stick input. Dutch roll is an out of phase yaw and roll oscillation, and it's much harder to recover from. To get there, I sized the vertical stabilizer toward the upper end of the recommended range, since more vertical tail area strengthens directional stability and pushes the aircraft toward spiral.</p>
+          </div>
+          <div>
+            <h4>Result</h4>
+            <ul>
+              <li>Three successful flights, ending with the first in-flight MTE deflection</li>
+              <li>Wind tunnel: over 100% C<sub>L</sub> increase at 0&deg; AoA, neutral to 30&deg; MTE</li>
+              <li>Over 30% C<sub>L</sub> increase at 5&deg; AoA, significant across all deflections</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="instruments">
+          <div class="panel">
+            <h4>Static margin, live</h4>
+            <p class="sub">Move the CG and see why I landed at 18%. Neutral point and MAC are the as-built values.</p>
+            <svg class="sm-svg" viewBox="0 0 600 120" role="img" aria-labelledby="sm-desc">
+              <desc id="sm-desc">Axis from 0.36 to 0.50 meters aft of the nose showing the CG position relative to the neutral point at 0.487 meters.</desc>
+              <line x1="20" y1="70" x2="580" y2="70" stroke="var(--rule)" stroke-width="2"/>
+              <g id="sm-ticks" font-size="15" fill="var(--ink-2)"></g>
+              <rect id="sm-span" y="64" height="12" rx="3" fill="color-mix(in srgb,var(--flight) 25%,transparent)"/>
+              <g id="np">
+                <line y1="30" y2="96" stroke="var(--model)" stroke-width="3"/>
+                <text y="20" text-anchor="middle" font-size="16" font-weight="700" fill="var(--model)">NP 0.487 m</text>
+              </g>
+              <g id="cg">
+                <circle cy="70" r="13" fill="var(--panel)" stroke="var(--flight)" stroke-width="3"/>
+                <path d="M0 -13 A13 13 0 0 1 13 0 L0 0 Z M0 13 A13 13 0 0 1 -13 0 L0 0 Z" transform="translate(0,70)" fill="var(--flight)"/>
+                <text id="cg-label" y="114" text-anchor="middle" font-size="16" font-weight="700" fill="var(--flight-ink)">CG</text>
+              </g>
+            </svg>
+            <div class="sm-read" aria-live="polite">
+              <span class="big num" id="sm-val">18.1%</span>
+              <span class="zone" id="sm-zone">Balanced, biased stable</span>
+            </div>
+            <p class="sm-note" id="sm-note">As flown. A little more stable than the 15% target, traded for confidence on a first flight.</p>
+            <label for="cg-range" class="sub" style="display:block;margin:0">CG position aft of nose</label>
+            <input id="cg-range" type="range" min="0.380" max="0.484" step="0.001" value="0.430" aria-describedby="sm-note">
+            <div class="row">
+              <div class="legend"><span><i style="background:var(--model)"></i>Model: neutral point</span><span><i style="background:var(--flight)"></i>Flight: CG</span></div>
+              <button class="linkbtn" type="button" id="sm-reset">Back to as-flown</button>
+            </div>
+          </div>
+          <div class="panel">
+            <h4>Tail sizing vs. recommended range</h4>
+            <p class="sub">Light aircraft guidance shaded in blue, my values in orange.</p>
+            <div class="gauge">
+              <div class="lbl"><span>Horizontal, V<sub>H</sub></span><b>0.685</b></div>
+              <div class="track"><div class="band" style="left:25%;width:50%"></div><div class="mark" style="left:60.63%"></div></div>
+              <div class="ticks"><span>0.2</span><span>0.4</span><span>0.6</span><span>0.8</span><span>1.0</span></div>
+            </div>
+            <div class="gauge">
+              <div class="lbl"><span>Vertical, V<sub>V</sub></span><b>0.0403</b></div>
+              <div class="track"><div class="band" style="left:16.67%;width:50%"></div><div class="mark" style="left:50.5%"></div></div>
+              <div class="ticks"><span>0.01</span><span>0.025</span><span>0.04</span><span>0.055</span><span>0.07</span></div>
+            </div>
+            <p class="sub" style="margin:0">Both tail volumes sit high in their ranges on purpose. V<sub>H</sub> and V<sub>V</sub> give strong pitch and yaw authority and extra stability, and high V<sub>V</sub> pushes the aircraft toward a correctable spiral over Dutch roll. A tip mounted camera requirement, pushed V<sub>V</sub> higher and put more weight aft, so I used a 0.6 taper ratio on the vertical stabilizer to help reduce weight and induced drag.</p>
+          </div>
+        </div>
+
+        <div class="instruments alt">
+          <div class="panel">
+            <h4>Flight log</h4>
+            <p class="sub">Each flight expanded the envelope one step.</p>
+            <ol class="log">
+              <li><span class="n">Flight 1<small>Success</small></span><p>CU Flight Ops airworthiness check. Stable pattern, trim established.</p></li>
+              <li><span class="n">Flight 2<small>Success</small></span><p>Test pilot handoff. Roll, pitch, and yaw authority demonstrated, positive static and dynamic stability. Camera mount added to the vertical stabilizer.</p></li>
+              <li><span class="n">Flight 3<small>Success</small><small class="warn">Anomaly logged</small></span><p>First MTE deflection at 20&deg; with GPS telemetry. A torsional aeroelastic event occurred under high speed asymmetric MTE loading.</p></li>
+            </ol>
+          </div>
+          <div class="panel">
+            <h4>First takeoff</h4>
+            <p class="sub">Flight 1, CU Flight Ops airworthiness check.</p>
+            <video controls preload="none" playsinline poster="https://johnschlichting.com/flight.jpeg" style="width:100%;border-radius:10px;background:#000;aspect-ratio:16/9;object-fit:contain">
+              <source src="https://johnschlichting.com/first_flight.mov" type="video/mp4">
+              <source src="https://johnschlichting.com/first_flight.mov" type="video/quicktime">
+            </video>
+          </div>
+        </div>
+
+        <div class="media">
+          <figure class="s4"><div class="frame"><img src="https://johnschlichting.com/tailCAD.png" alt="Onshape CAD model of the tail assembly" loading="lazy" data-zoom></div><figcaption>Tail assembly in Onshape</figcaption></figure>
+          <figure class="s4 fit"><div class="frame"><img src="https://johnschlichting.com/tail.jpeg" alt="The finished tail assembly, fabricated by hand" loading="lazy" data-zoom></div><figcaption>Finished tail, fabricated by hand</figcaption></figure>
+          <figure class="s4"><div class="frame"><img src="https://johnschlichting.com/MTEteam.jpeg" alt="The Prototype and IT teams with the aircraft" loading="lazy" data-zoom></div><figcaption>Prototype and IT teams</figcaption></figure>
+        </div>
+
+        <div class="writeup">
+          <h4>Design notes</h4>
+          <div class="cols">
+            <div><h5>Every tail decision moves the CG</h5><p>A bigger horizontal stabilizer buys pitch authority but adds weight far aft, eroding static margin. A bigger vertical guards against Dutch roll at the same penalty. I sized both against light aircraft ranges: <strong>V<sub>H</sub> 0.685</strong> in 0.4&ndash;0.8 and <strong>V<sub>V</sub> 0.0403</strong> in 0.02&ndash;0.05.</p></div>
+            <div><h5>Why 18% and not 15%</h5><p>Too stable and the aircraft goes sluggish, damping the pitch response we needed to measure MTE effects. Too little and gusts cause outsized pitch reactions on an untested airframe. The extra margin was a deliberate trade.</p></div>
+            <div><h5>Airfoil</h5><p>NACA 0012 on both surfaces, symmetric, so zero pitching moment at zero AoA, and well documented at our low Reynolds numbers.</p></div>
+            <div><h5>Structure</h5><p>Lifting surface spars pass through and intersect the main carbon spar rather than stopping at it, improving load transfer in bending and torsion. The CNC cut spar channels in the same pass as the airfoil, so their locations were exact. Control surfaces hang on continuous living hinges.</p></div>
+            <div><h5>A gap I caught in assembly</h5><p>I hadn&rsquo;t allocated a servo mount. I added a basswood block forward of the empennage box for a rigid mount with short, direct linkages.</p></div>
+            <div><h5>Wind wall validation</h5><p>Custom load cell stand at Re &asymp; 155,000. Over 100% C<sub>L</sub> increase at 0&deg; AoA from neutral to 30&deg; MTE, and over 30% at 5&deg; AoA, statistically significant across all deflection angles.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="next"><span></span><button class="linkbtn" type="button" data-next="glider">Next: Fixed-wing glider</button></div>
+    </article>
+
+    <!-- ===================== Glider ===================== -->
+    <article class="project" id="glider" role="tabpanel" aria-labelledby="tab-glider" tabindex="-1" hidden>
+      <div class="p-head">
+        <div>
+          <h3>Fixed wing glider</h3>
+          <p class="p-meta">Aerospace Vehicle Design Lab, Summer 2024, team project</p>
+          <p class="p-pitch">We designed, built, and hand-launched a 1 m fixedwing glider with a goal of gliding 100 m from a 14.5 m height. Our glider fell well short of our model's prediction, and this is where I learned the difference between prediction models and reality</p>
+        </div>
+        <div class="role"><h4>My role</h4><p>Configuration trade, MATLAB sizing and sensitivity study, CNC fabrication, and flight test with my team.</p></div>
+      </div>
+      <dl class="specs">
+        <div><dt>Wingspan</dt><dd>1.0 m</dd></div>
+        <div><dt>Aspect ratio</dt><dd>7</dd></div>
+        <div><dt>Wing airfoil</dt><dd>Eppler 393</dd></div>
+        <div><dt>Predicted</dt><dd>140 m</dd></div>
+        <div><dt>Best flight</dt><dd>51.6 m</dd></div>
+      </dl>
+
+      <div class="panel glide" style="margin-top:28px">
+        <div class="glide-grid">
+          <div>
+            <h4>Predicted vs. flown</h4>
+            <p class="sub">Distances to scale horizontally. Height exaggerated for readability.</p>
+            <svg viewBox="0 0 620 230" role="img" aria-labelledby="gl-desc">
+              <desc id="gl-desc">From a 14.5 meter launch, the model predicted 140 meters of range, the requirement was 100 meters, and the best actual flight reached 51.6 meters.</desc>
+              <line x1="30" y1="190" x2="600" y2="190" stroke="var(--ink-2)" stroke-width="1.5"/>
+              <rect x="10" y="40" width="20" height="150" fill="var(--tint)" stroke="var(--rule)"/>
+              <text x="36" y="36" font-size="13" fill="var(--ink-2)">Launch, 14.5 m</text>
+              <line x1="425.7" y1="182" x2="425.7" y2="198" stroke="var(--ink-2)" stroke-width="2"/>
+              <text x="425.7" y="214" text-anchor="middle" font-size="13" fill="var(--ink-2)">Requirement 100 m</text>
+              <path id="pred" d="M30 40 L584 190" fill="none" stroke="var(--model)" stroke-width="3" stroke-dasharray="8 7"/>
+              <line x1="584" y1="182" x2="584" y2="198" stroke="var(--model)" stroke-width="2"/>
+              <text x="590" y="214" text-anchor="end" font-size="13" font-weight="700" fill="var(--model)">Model 140 m</text>
+              <path id="act" d="M30 40 L234.2 190" fill="none" stroke="var(--flight)" stroke-width="4" stroke-linecap="round"/>
+              <circle id="act-end" cx="234.2" cy="190" r="6" fill="var(--flight)"/>
+              <text id="act-lbl" x="234.2" y="214" text-anchor="middle" font-size="13" font-weight="700" fill="var(--flight-ink)">Flown 51.6 m</text>
+            </svg>
+            <div class="row">
+              <div class="legend"><span><i style="background:var(--model)"></i>MATLAB model</span><span><i style="background:var(--flight)"></i>Best measured flight</span></div>
+              <button class="linkbtn" type="button" id="replay">Replay the flight</button>
+            </div>
+          </div>
+          <div>
+            <div class="gap-stat num">&minus;63%</div>
+            <p>Best flight vs. predicted range</p>
+            <h4 style="margin:0 0 8px;font-size:16px">Why it fell short</h4>
+            <ul class="why">
+              <li>Our glider stalled on nearly every flight due to the trim AoA being too high, airspeed too low</li>
+              <li>Launch angle and velocity weren&rsquo;t in the model, and they decided whether it entered a stable glide</li>
+              <li>The analysis wasn&rsquo;t wrong. It was incomplete and I carried this mindset into future projects.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-only deeper"><button class="linkbtn" type="button" data-go="full">See the sizing study, drag polar, and flight video</button></div>
+
+      <div class="full">
+        <div class="three">
+          <div>
+            <h4>What we did</h4>
+            <ul>
+              <li>MATLAB sensitivity sweep on every major sizing parameter, doubling or halving each until range peaked, then bisecting to the optimum. Wing area dominated range, so we maximized it up to the 1 m span limit, and we kept the fuselage small and light</li>
+<li>Drag polar by component buildup (C<sub>D0</sub> = 0.0396) with the Obert model for span efficiency, used to find max L/D for range and the different speed for max endurance</li>
+<li>3D lift curve corrected from 2D Eppler 393 data, with airfoil data matched to our expected Reynolds number</li>
+            </ul>
+          </div>
+          <div>
+            <h4>The call we made</h4>
+            <p>We researched several configurations, including a twin fuselage modeled on the Virgin GlobalFlyer and a high aspect ratio sailplane modeled on the AS 33. Both were too complex to fabricate and model within our 1 m span limit and 10 week schedule. We chose a conventional high wing and T-tail, a layout based on well performing gliders that we could build, modify, and model with confidence.</p>
+          </div>
+          <div>
+            <h4>Iteration</h4>
+            <p>Initial configuration testing showed a nose dive with a fixed tail. We added adjustable tail incidence and found ~5&deg; gave trimmed flight through test flights.</p>
+          </div>
+        </div>
+        <div class="media">
+          <figure class="s4"><div class="frame"><img src="https://johnschlichting.com/glider.JPG" alt="The finished fixed-wing glider" loading="lazy" data-zoom></div><figcaption>Final aircraft</figcaption></figure>
+          <figure class="s4"><div class="frame"><img src="https://johnschlichting.com/glider_liftcurve.png" alt="3D lift curve slope for the Eppler 393 wing from MATLAB" loading="lazy" data-zoom></div><figcaption>3D lift curve, Eppler 393 (MATLAB)</figcaption></figure>
+          <figure class="s4"><div class="frame"><img src="https://johnschlichting.com/glider_dragpolar.png" alt="Analytical drag polar from MATLAB" loading="lazy" data-zoom></div><figcaption>Analytical drag polar (MATLAB)</figcaption></figure>
+          <figure class="s12">
+            <video controls preload="none" playsinline poster="https://johnschlichting.com/glider.JPG" style="max-height:520px">
+              <source src="https://johnschlichting.com/glider_flight.MOV" type="video/mp4">
+              <source src="https://johnschlichting.com/glider_flight.MOV" type="video/quicktime">
+            </video>
+            <figcaption>Hand launch from the CU Aerospace building</figcaption>
+          </figure>
+        </div>
+        <div class="writeup">
+          <h4>Design notes</h4>
+          <div class="cols">
+            <div><h5>Configuration</h5><p>The high wing puts the aerodynamic center above the CG for a passive roll restoring effect. The T-tail keeps the stabilizer out of the wing and fuselage wake, so a smaller surface gives stable pitch authority. Natural stability, no active control.</p></div>
+            <div><h5>Sensitivity method</h5><p>For each parameter we doubled or halved an estimate until range overshot its peak, then bisected toward the optimum. <strong>Wing area</strong> drove range most; fuselage weight and frontal area hurt it; taper, sweep, and stabilizer planform barely moved it, so we set those for easy fabrication.</p></div>
+            <div><h5>Stability</h5><p>Neutral point at 0.12&nbsp;m from the leading edge, with CG placed forward for a static margin inside the required 10&ndash;30%.</p></div>
+            <div><h5>Flight test method</h5><p>Flights at several tail incidence angles let us map the drag polar experimentally, computing C<sub>L</sub> and C<sub>D</sub> from measured range and comparing against the model. Average flight time was about 8 seconds.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="next"><button class="linkbtn" type="button" data-next="mte">Previous: MTE demonstrator</button><button class="linkbtn" type="button" data-next="step2it">Next: Step2It cane</button></div>
+    </article>
+
+    <!-- ===================== Step2It ===================== -->
+    <article class="project" id="step2it" role="tabpanel" aria-labelledby="tab-step2it" tabindex="-1" hidden>
+      <div class="p-head">
+        <div>
+          <h3>Step2It smart cane</h3>
+          <p class="p-meta">Invention and Innovation, Spring 2025, team of five</p>
+          <p class="p-pitch">A walking cane with a hidden step counter and display, built for elderly who need a reason to move without changing their routine.</p>
+        </div>
+        <div class="role"><h4>My role</h4><p>Designed and manufactured the walnut handle. Owned the full business plan through financial modeling, market sizing, and pricing.</p></div>
+      </div>
+      <dl class="specs">
+        <div><dt>Price</dt><dd>$149.99</dd></div>
+        <div><dt>Gross margin</dt><dd>61%</dd></div>
+        <div><dt>Break-even</dt><dd>Year 1</dd></div>
+        <div><dt>Build time</dt><dd>5 hr</dd></div>
+        <div><dt>Target SOM</dt><dd>~$106M</dd></div>
+      </dl>
+      <div class="sum">
+        <img src="https://johnschlichting.com/cane.jpg" alt="The finished Step2It smart walking cane" loading="lazy" data-zoom style="aspect-ratio:auto;width:auto;height:auto;max-width:100%;max-height:480px;object-fit:contain;display:block;margin:0 auto">
+        <div>
+          <h4>Key takeaways</h4>
+          <ul class="takeaways">
+            <li><b>Started from user research.</b> 68% of cane users we surveyed are active fewer than 2 days a week.</li>
+            <li><b>One hard requirement,</b> no behavior change. All electronics hide inside the handle without changing its profile.</li>
+            <li><b>Built to manufacture,</b> with an aluminum shaft, TPU foot, ASA printed housing, and Arduino step counter.</li>
+            <li><b>Priced at about half the leading competitor</b> with a 61% gross margin.</li>
+          </ul>
+          <div class="deeper summary-only"><button class="linkbtn" type="button" data-go="full">See the market sizing and manufacturing plan</button></div>
+        </div>
+      </div>
+      <div class="full">
+        <div class="media">
+          <figure class="s8" style="align-self:start"><div class="frame" style="aspect-ratio:auto;height:380px"><img src="https://johnschlichting.com/step2Itmanu.png" alt="Step2It manufacturing process diagram" loading="lazy" data-zoom style="width:100%;height:100%;object-fit:contain"></div><figcaption>Manufacturing process</figcaption></figure>
+          <figure class="s4" style="align-self:start"><div class="frame" style="aspect-ratio:auto;height:380px"><img src="https://johnschlichting.com/step2itlogo.jpg" alt="Step2It logo" loading="lazy" data-zoom style="width:100%;height:100%;object-fit:contain"></div><figcaption>Brand</figcaption></figure>
+        </div>
+        <div class="writeup">
+          <h4>Design and business notes</h4>
+          <div class="cols">
+            <div><h5>Research</h5><p>Interviews with older adults, caregivers, and physical therapists. 75% of caregivers believed their loved ones would benefit from more activity, and 55% of that activity already came from walking. Patent and competitor review covered 10+ products.</p></div>
+            <div><h5>Requirements</h5><p>Accurate step count, lightweight, easy to use, durable, good looking, and easy battery replacement. Interviews made the walnut handle a must as our users wanted something that looked premium, not medical.</p></div>
+            <div><h5>Market</h5><p><strong>$28B TAM</strong> in global elderly and assistive devices, <strong>$532M SAM</strong> in U.S. canes, and <strong>~$106M SOM</strong> from the 20% of cane users willing to adopt a wearable health device.</p></div>
+            <div><h5>Manufacturing</h5><p>Machine the shaft, shape the handle, print the housing, solder, assemble. About 1.5 hours of hands on labor and 5 hours total per unit, with every material chosen for repeatability at scale.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="next"><button class="linkbtn" type="button" data-next="glider">Previous: Fixed-wing glider</button><button class="linkbtn" type="button" data-next="cordkeeper">Next: Cord Keeper Pro</button></div>
+    </article>
+
+    <!-- ===================== Cord Keeper ===================== -->
+    <article class="project" id="cordkeeper" role="tabpanel" aria-labelledby="tab-cordkeeper" tabindex="-1" hidden>
+      <div class="p-head">
+        <div>
+          <h3>Cord Keeper Pro</h3>
+          <p class="p-meta">Product Design, Fall 2024, team of five</p>
+          <p class="p-pitch">Labor and delivery nurses stored four $5,000 NICU sensors in a plastic bag, and the cords tangled at the moment of highest clinical demand. We built a wall mounted unit that retracts each cord automatically for easier organization.</p>
+        </div>
+        <div class="role"><h4>Team result</h4><p>Delivered a working prototype on schedule despite supply chain delays.</p></div>
+      </div>
+      <dl class="specs">
+        <div><dt>Sensors</dt><dd>4</dd></div>
+        <div><dt>Cost each</dt><dd>$5,000</dd></div>
+        <div><dt>Instructions needed</dt><dd>0</dd></div>
+        <div><dt>Retraction</dt><dd>Automatic</dd></div>
+      </dl>
+      <div class="sum">
+        <img src="https://johnschlichting.com/cord%20wraps.png" alt="Cord Keeper Pro wall-mounted unit" loading="lazy" data-zoom>
+        <div>
+          <h4>Key takeaways</h4>
+          <ul class="takeaways">
+            <li><b>Requirements came from a nurse interview:</b> portable, organized, no learning curve, cheap enough to replace a familiar system.</li>
+            <li><b>Pull to retrieve, release to retract.</b> Four independent cylinders, one per sensor.</li>
+            <li><b>Our clock springs never arrived</b> before the expo. We quickly switched to elastic cord on bearings and still delivered a working prototype.</li>
+            <li><b>Every first time tester</b> used it correctly with no instructions.</li>
+          </ul>
+          <div class="deeper summary-only"><button class="linkbtn" type="button" data-go="full">See the mechanism and test plan</button></div>
+        </div>
+      </div>
+      <div class="full">
+        <div class="media">
+          <figure class="s12"><div class="frame" style="aspect-ratio:16/7"><img src="https://johnschlichting.com/plungermech.png" alt="Cord Keeper Pro retraction mechanism" loading="lazy" data-zoom style="object-fit:contain;background:#fff"></div><figcaption>Retraction mechanism</figcaption></figure>
+        </div>
+        <div class="writeup">
+          <h4>Engineering notes</h4>
+          <div class="cols">
+            <div><h5>Original mechanism</h5><p>A custom clock spring stores energy as the cord is pulled and drives the cylinder back on release. We designed the whole unit around it.</p></div>
+            <div><h5>The pivot</h5><p>With the springs missing, a teammate proposed elastic cord wrapped around bearings inside each cylinder. Pulling the sensor stretches the elastic; releasing it rotates the cylinder and rewinds the cord. Elastic degrades over time, so production would need a different part, but it proved the concept completely.</p></div>
+            <div><h5>Validation testing</h5><p>Support reactions and ideal pull angles for the wall mount; magnet pull and adhesion; velcro hold; elastic elongation, durability, and cycling strength; rubber flexibility and friction for consistent cord grip.</p></div>
+            <div><h5>Usability</h5><p>We handed it to people who had never seen it and gave no instructions. Every participant operated it successfully. Succesfully acheiving our most important requirement.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="next"><button class="linkbtn" type="button" data-next="step2it">Previous: Step2It cane</button><button class="linkbtn" type="button" data-next="pinball">Next: Self powered pinball</button></div>
+    </article>
+
+    <!-- ===================== Pinball ===================== -->
+    <article class="project" id="pinball" role="tabpanel" aria-labelledby="tab-pinball" tabindex="-1" hidden>
+      <div class="p-head">
+        <div>
+          <h3>Self powered pinball machine</h3>
+          <p class="p-meta">Embedded Systems and Sustainable Design, Fall 2023, team of five. My first project at CU.</p>
+          <p class="p-pitch">No batteries, no outlet. The player spins a flywheel that drives a generator, which powers the Arduino, IR scoring sensors, LEDs, and score display. Stop spinning and the lights go out.</p>
+        </div>
+        <div class="role"><h4>Why it matters</h4><p>My first time balancing mechanical design, electronics, embedded code, and a hard constraint on one budget and deadline.</p></div>
+      </div>
+      <dl class="specs">
+        <div><dt>Batteries</dt><dd>0</dd></div>
+        <div><dt>Budget</dt><dd>&lt;$75/person</dd></div>
+        <div><dt>Timeline</dt><dd>10 weeks</dd></div>
+        <div><dt>Power</dt><dd>Flywheel</dd></div>
+        <div><dt>Controller</dt><dd>Arduino</dd></div>
+        <div><dt>Scoring</dt><dd>IR beams</dd></div>
+      </dl>
+      <div class="sum" style="grid-template-columns:1fr">
+        <div>
+          <h4>Key takeaways</h4>
+          <ul class="takeaways">
+            <li><b>Built to address battery waste:</b> only 4% of alkaline batteries are ever recycled.</li>
+            <li><b>Flywheel to generator to every system on the board,</b> with the energy harvesting design built to transfer to other tabletop games.</li>
+            <li><b>IR emitter and receiver pairs</b> register hits; the Arduino counts score and drives the lights.</li>
+          </ul>
+          <div class="deeper summary-only"><button class="linkbtn" type="button" data-go="full">See requirements and build notes</button></div>
+        </div>
+      </div>
+      <div class="full">
+        <div class="writeup">
+          <h4>Build notes</h4>
+          <div class="cols">
+            <div><h5>Requirements</h5><p>Functional, light up on score, keep an accurate count, sturdy paddles, and generate its own energy from play. Qualitative, appealing across ages, durable for transport, and fun.</p></div>
+            <div><h5>Materials</h5><p>Recycled hardwood frame with PLA printed flywheel mount and paddles. The small footprint cut material use and made it portable.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="next"><button class="linkbtn" type="button" data-next="cordkeeper">Previous: Cord Keeper Pro</button><button class="linkbtn" type="button" data-next="tunnel">Next: Home wind tunnel</button></div>
+    </article>
+
+    <!-- ===================== Wind tunnel ===================== -->
+    <article class="project" id="tunnel" role="tabpanel" aria-labelledby="tab-tunnel" tabindex="-1" hidden>
+      <div class="p-head">
+        <div>
+          <h3>Sub scale wind tunnel</h3>
+          <p class="p-meta">Personal project, in progress</p>
+          <p class="p-pitch">I&rsquo;m building my own sub scale wind tunnel at home to run flow visualization tests, so I can keep closing the loop between model and air on my own time.</p>
+        </div>
+        <div class="role"><h4>Status</h4><p>Under development. Photos and first results will be posted here.</p></div>
+      </div>
+      <div class="wip-card"><p>This is the same loop as every project above: predict it, test it, and find out what the model missed. This time I&rsquo;m building the test rig too.</p></div>
+      <div class="next"><button class="linkbtn" type="button" data-next="pinball">Previous: Self powered pinball</button><button class="linkbtn" type="button" data-next="mte">Back to the MTE demonstrator</button></div>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== Skills ===================== -->
+<section class="band-sec" id="skills" aria-labelledby="sk-t">
+  <div class="wrap">
+    <h2 class="sec-title" id="sk-t">Tools and skills</h2>
+    <p class="sec-sub">Each one is tied to where I actually used it.</p>
+    <table class="skills">
+      <thead><tr><th scope="col">Area</th><th scope="col">Tools and methods</th><th scope="col">Used in</th></tr></thead>
+      <tbody>
+        <tr>
+          <th scope="row">Aircraft design and analysis</th>
+          <td class="items"><div class="chips"><span>Static stability, CG and NP</span><span>Tail sizing, volume coefficients</span><span>Drag polars</span><span>Sensitivity studies</span><span>Airfoil selection</span><span>OpenVSP</span><span>XFLR5</span></div></td>
+          <td class="used"><div class="proof"><a href="#work" data-open="mte">MTE demonstrator</a><a href="#work" data-open="glider">Glider</a></div></td>
+        </tr>
+        <tr>
+          <th scope="row">Test and data</th>
+          <td class="items"><div class="chips"><span>Flight test support</span><span>Load cell wind tunnel testing</span><span>Flight data reduction</span><span>Validation and usability testing</span></div></td>
+          <td class="used"><div class="proof"><a href="#work" data-open="mte">MTE demonstrator</a><a href="#work" data-open="glider">Glider</a><a href="#work" data-open="cordkeeper">Cord Keeper</a></div></td>
+        </tr>
+        <tr>
+          <th scope="row">Programming</th>
+          <td class="items"><div class="chips"><span>MATLAB</span><span>Python</span><span>C++</span><span>Arduino</span><span>Excel</span></div></td>
+          <td class="used"><div class="proof"><a href="#work" data-open="glider">Glider</a><a href="#work" data-open="step2it">Step2It</a><a href="#work" data-open="pinball">Pinball</a><a href="#work" data-open="tunnel">Wind tunnel</a></div></td>
+        </tr>
+        <tr>
+          <th scope="row">CAD and fabrication</th>
+          <td class="items"><div class="chips"><span>Onshape</span><span>SolidWorks</span><span>4-axis CNC foam, G-code</span><span>Carbon fiber, wood, foam structures</span><span>3D printing: PLA, TPU, ASA</span></div></td>
+          <td class="used"><div class="proof"><a href="#work" data-open="mte">MTE demonstrator</a><a href="#work" data-open="glider">Glider</a><a href="#work" data-open="step2it">Step2It</a></div></td>
+        </tr>
+        <tr>
+          <th scope="row">Product and business</th>
+          <td class="items"><div class="chips"><span>User research</span><span>Requirements definition</span><span>Market sizing (TAM/SAM/SOM)</span><span>Pricing and financial models</span><span>Technical writing</span><span>Project management</span></div></td>
+          <td class="used"><div class="proof"><a href="#work" data-open="step2it">Step2It</a><a href="#work" data-open="cordkeeper">Cord Keeper</a></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="band-sec" id="about" aria-labelledby="ab-t">
+  <div class="wrap about">
+    <img src="https://johnschlichting.com/F117.jpeg" alt="John Schlichting in front of the Flatirons in Boulder" loading="lazy" data-zoom>
+    <div>
+      <h2 class="sec-title" id="ab-t" style="margin-bottom:16px">About me</h2>
+      <p>I'm a CU Boulder graduate in Integrated Design Engineering (IDE), with an Aerospace concentration and an Engineering Management emphasis. IDE is a design centered engineering degree built around team projects: you start from a user need, work through analysis and hardware, and finish with a business case. That meant owning five projects end to end, and it's why I think about a part's manufacturability and cost as early as its performance.</p>
+      <p>Aviation runs in my family. My great grandfather was a lead machinist in Pratt and Whitney's experimental shop in the 1940s, and my grandfather, a retired Air Force lieutenant general, was the program director for the B-2 Spirit and F-117 Nighthawk programs. They have set the bar high and I'm here to meet it.</p>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact" aria-labelledby="ct-t">
+  <div class="wrap">
+    <h2 id="ct-t">Let&rsquo;s build the next one.</h2>
+    <p>Boulder, CO. Available now and open to relocation.</p>
+    <div class="cta">
+      <a class="btn primary" href="mailto:johnschlichting101@gmail.com">johnschlichting101@gmail.com</a>
+      <a class="btn" href="https://linkedin.com/in/john-schlichting" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="tel:+17205395266">720-539-5266</a>
+      <a class="btn" href="https://johnschlichting.com/JRS_Resume1.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">&copy; 2026 John Schlichting</div></footer>
+
+<dialog class="lb" id="lb" aria-label="Enlarged image">
+  <button type="button" id="lb-close">Close</button>
+  <img id="lb-img" alt="">
+  <p id="lb-cap"></p>
+</dialog>
+
+<script>
+(function(){
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var work=document.getElementById('work');
+
+  /* ---------- Detail mode ---------- */
+  var modeBtns=document.querySelectorAll('.mode button');
+  function setMode(m){
+    document.body.dataset.mode=m;
+    modeBtns.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.mode===m))});
+  }
+  modeBtns.forEach(function(b){b.addEventListener('click',function(){setMode(b.dataset.mode)})});
+  document.querySelectorAll('[data-go="full"]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var panel=b.closest('.project');
+      setMode('full');
+      panel.querySelector('.full').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+    });
+  });
+
+  /* ---------- Project tabs ---------- */
+  var tabs=[].slice.call(document.querySelectorAll('[role="tab"]'));
+  function openTab(id,scroll){
+    var found=false;
+    tabs.forEach(function(t){
+      var on=t.getAttribute('aria-controls')===id;
+      if(on) found=true;
+      t.setAttribute('aria-selected',String(on));
+      t.tabIndex=on?0:-1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden=!on;
+      if(on) t.scrollIntoView({block:'nearest',inline:'nearest'});
+    });
+    if(!found) return;
+    document.querySelectorAll('.project video').forEach(function(v){if(v.closest('.project').hidden)v.pause()});
+    try{ if(history.replaceState) history.replaceState(null,'','#'+id); }catch(e){}
+    if(scroll) work.querySelector('.tabbar').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+    if(id==='glider') setTimeout(replay,250);
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){openTab(t.getAttribute('aria-controls'),false)});
+    t.addEventListener('keydown',function(e){
+      var j=null;
+      if(e.key==='ArrowRight') j=(i+1)%tabs.length;
+      if(e.key==='ArrowLeft') j=(i-1+tabs.length)%tabs.length;
+      if(e.key==='Home') j=0;
+      if(e.key==='End') j=tabs.length-1;
+      if(j!==null){e.preventDefault();tabs[j].focus();openTab(tabs[j].getAttribute('aria-controls'),false);}
+    });
+  });
+  document.querySelectorAll('[data-next]').forEach(function(b){
+    b.addEventListener('click',function(){openTab(b.dataset.next,true)});
+  });
+  document.querySelectorAll('[data-open]').forEach(function(a){
+    a.addEventListener('click',function(e){e.preventDefault();openTab(a.dataset.open,true)});
+  });
+  var initial=location.hash.slice(1);
+  if(initial && document.getElementById(initial) && document.getElementById(initial).getAttribute('role')==='tabpanel'){
+    openTab(initial,false);
+    setTimeout(function(){work.scrollIntoView()},50);
+  }
+
+  /* ---------- Static margin ---------- */
+  var NP=0.487, MAC=0.315, X0=0.36, X1=0.50, P0=30, P1=570;
+  function px(x){return P0+(x-X0)/(X1-X0)*(P1-P0)}
+  var ticks=document.getElementById('sm-ticks');
+  for(var t=0.36;t<=0.5001;t+=0.02){
+    var x=px(t);
+    ticks.insertAdjacentHTML('beforeend','<line x1="'+x+'" x2="'+x+'" y1="64" y2="76" stroke="var(--rule)" stroke-width="2"/><text x="'+x+'" y="54" text-anchor="middle">'+t.toFixed(2)+'</text>');
+  }
+  var npG=document.getElementById('np'), npL=npG.querySelector('line');
+  npL.setAttribute('x1',px(NP));npL.setAttribute('x2',px(NP));npG.querySelector('text').setAttribute('x',px(NP));
+  var range=document.getElementById('cg-range'), cg=document.getElementById('cg'),
+      span=document.getElementById('sm-span'), val=document.getElementById('sm-val'),
+      zone=document.getElementById('sm-zone'), note=document.getElementById('sm-note'),
+      lbl=document.getElementById('cg-label');
+  function update(){
+    var c=parseFloat(range.value), sm=(NP-c)/MAC*100;
+    cg.setAttribute('transform','translate('+px(c)+',0)');
+    lbl.textContent='CG '+c.toFixed(3)+' m';
+    span.setAttribute('x',px(c));span.setAttribute('width',Math.max(0,px(NP)-px(c)));
+    val.textContent=sm.toFixed(1)+'%';
+    var z,n;
+    if(Math.abs(c-0.430)<0.0005){z='Balanced, biased stable';n='As flown. A little more stable than the 15% target, traded for confidence on a first flight.';}
+    else if(sm<8){z='Twitchy';n='Gusts and small stick inputs produce exaggerated pitch reactions. Hard to trim, real loss-of-control risk on a first flight.';}
+    else if(sm<14){z='Responsive';n='Lively in pitch. Fine on a proven airframe, less forgiving on a hand-built first flight.';}
+    else if(sm<=20){z='Balanced';n='The window I targeted: stable enough to trust, responsive enough to measure how MTE deflection changes pitch behavior.';}
+    else if(sm<=26){z='Stable, getting heavy';n='Needs larger control inputs. Starts to damp the pitch response the MTE test was built to capture.';}
+    else {z='Sluggish';n='Very large inputs for modest pitch response. Safe, but it would mask the MTE data we came to collect.';}
+    zone.textContent=z;note.textContent=n;
+  }
+  range.addEventListener('input',update);
+  document.getElementById('sm-reset').addEventListener('click',function(){range.value='0.430';update();});
+  update();
+
+  /* ---------- Glider replay ---------- */
+  var act=document.getElementById('act'), pred=document.getElementById('pred'),
+      end=document.getElementById('act-end'), albl=document.getElementById('act-lbl');
+  function replay(){
+    if(reduce || document.getElementById('glider').hidden || !act.animate) return;
+    var L=act.getTotalLength(); if(!L) return;
+    [end,albl].forEach(function(e){e.style.opacity=0});
+    pred.animate([{opacity:0},{opacity:1}],{duration:500,fill:'both'});
+    act.style.strokeDasharray=L;
+    act.animate([{strokeDashoffset:L},{strokeDashoffset:0}],{duration:1500,delay:500,easing:'cubic-bezier(.3,.1,.4,1)',fill:'both'})
+      .onfinish=function(){[end,albl].forEach(function(e){e.animate([{opacity:0},{opacity:1}],{duration:300,fill:'forwards'})})};
+  }
+  document.getElementById('replay').addEventListener('click',replay);
+
+  /* ---------- Lightbox ---------- */
+  var lb=document.getElementById('lb'), lbImg=document.getElementById('lb-img'), lbCap=document.getElementById('lb-cap');
+  document.querySelectorAll('img[data-zoom]').forEach(function(img){
+    img.tabIndex=0;
+    function open(){lbImg.src=img.currentSrc||img.src;lbImg.alt=img.alt;lbCap.textContent=img.alt;if(lb.showModal)lb.showModal();}
+    img.addEventListener('click',open);
+    img.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
+  });
+  document.getElementById('lb-close').addEventListener('click',function(){lb.close()});
+  lb.addEventListener('click',function(e){if(e.target===lb)lb.close()});
+})();
+</script>
+</body>
+</html>
