@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Self Powered Pinball Machine | John Schlichting</title>
+<meta name="description" content="A pinball machine powered entirely by a player spun flywheel. No batteries, no outlet.">
+<meta property="og:title" content="Self Powered Pinball Machine | John Schlichting">
+<meta property="og:description" content="A pinball machine powered entirely by a player spun flywheel. No batteries, no outlet.">
+<meta property="og:image" content="https://johnschlichting.com/flight.jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230E1B2C'/%3E%3Cpath d='M6 19 L26 13 L26 16 L6 22 Z' fill='%23F04A00'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="page">
+
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="full-name">John Schlichting</span><span class="short-name">John S.</span></a>
+    <ul>
+      <li><a href="about.html">About me</a></li>
+      <li><a href="index.html#projects" aria-current="page">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a class="resume-link" href="John_Schlichting_Resume.pdf" download>Resume</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="top">
+  <div class="wrap">
+    <a class="back" href="index.html#projects">&larr; All projects</a>
+    <article class="project page-project" id="pinball">
+      <div class="p-head">
+        <div>
+          <h1 class="p-title">Self powered pinball machine</h1>
+          <p class="p-meta">Embedded Systems and Sustainable Design, Fall 2023, team of five. My first project at CU.</p>
+          <p class="p-pitch">No batteries, no outlet. The player spins a flywheel that drives a generator, which powers the Arduino, IR scoring sensors, LEDs, and score display. Stop spinning and the lights go out.</p>
+        </div>
+        <div class="role"><h4>Why it matters</h4><p>My first time balancing mechanical design, electronics, embedded code, and a hard constraint on one budget and deadline.</p></div>
+      </div>
+      <dl class="specs">
+        <div><dt>Batteries</dt><dd>0</dd></div>
+        <div><dt>Budget</dt><dd>&lt;$75/person</dd></div>
+        <div><dt>Timeline</dt><dd>10 weeks</dd></div>
+        <div><dt>Power</dt><dd>Flywheel</dd></div>
+        <div><dt>Controller</dt><dd>Arduino</dd></div>
+        <div><dt>Scoring</dt><dd>IR beams</dd></div>
+      </dl>
+      <div class="sum" style="grid-template-columns:1fr">
+        <div>
+          <h4>Key takeaways</h4>
+          <ul class="takeaways">
+            <li><b>Built to address battery waste:</b> only 4% of alkaline batteries are ever recycled.</li>
+            <li><b>Flywheel to generator to every system on the board,</b> with the energy harvesting design built to transfer to other tabletop games.</li>
+            <li><b>IR emitter and receiver pairs</b> register hits; the Arduino counts score and drives the lights.</li>
+          </ul>
+        </div>
+      </div>
+      <h2 class="dive-h">Engineering deep dive</h2>
+      <div class="full">
+        <div class="writeup">
+          <h4>Build notes</h4>
+          <div class="cols">
+            <div><h5>Requirements</h5><p>Functional, light up on score, keep an accurate count, sturdy paddles, and generate its own energy from play. Qualitative, appealing across ages, durable for transport, and fun.</p></div>
+            <div><h5>Materials</h5><p>Recycled hardwood frame with PLA printed flywheel mount and paddles. The small footprint cut material use and made it portable.</p></div>
+          </div>
+        </div>
+      </div>
+    </article>
+    <nav class="pn" aria-label="More projects"><a class="pn-prev" href="cord-keeper.html"><span>Previous project</span><b>Cord Keeper Pro</b></a><a class="pn-next" href="index.html#projects"><span>Back to</span><b>All projects</b></a></nav>
+  </div>
+</main>
+
+<section class="contact" id="contact" aria-labelledby="ct-t">
+  <div class="wrap">
+    <h2 id="ct-t">Let&rsquo;s build the next one.</h2>
+    <p>Boulder, CO. Available now and open to relocation.</p>
+    <div class="cta">
+      <a class="btn primary" href="mailto:johnschlichting101@gmail.com">johnschlichting101@gmail.com</a>
+      <a class="btn" href="https://linkedin.com/in/john-schlichting" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="tel:+17205395266">720-539-5266</a>
+      <a class="btn" href="John_Schlichting_Resume.pdf" download>Download resume</a>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">&copy; 2026 John Schlichting</div></footer>
+
+<dialog class="lb" id="lb" aria-label="Enlarged image">
+  <button type="button" id="lb-close">Close</button>
+  <img id="lb-img" alt="">
+  <p id="lb-cap"></p>
+</dialog>
+
+<script src="site.js"></script>
+</body>
+</html>
