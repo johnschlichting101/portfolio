@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Morphing Trailing Edge Demonstrator | John Schlichting</title>
+<meta name="description" content="Sub scale RC flight demonstrator for a morphing trailing edge. I owned the full tail, from sizing and stability to hand fabrication and three successful flights.">
+<meta property="og:title" content="Morphing Trailing Edge Demonstrator | John Schlichting">
+<meta property="og:description" content="Sub scale RC flight demonstrator for a morphing trailing edge. I owned the full tail, from sizing and stability to hand fabrication and three successful flights.">
+<meta property="og:image" content="https://johnschlichting.com/flight.jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230E1B2C'/%3E%3Cpath d='M6 19 L26 13 L26 16 L6 22 Z' fill='%23F04A00'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="page">
+
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="full-name">John Schlichting</span><span class="short-name">John S.</span></a>
+    <ul>
+      <li><a href="about.html">About me</a></li>
+      <li><a href="index.html#projects" aria-current="page">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a class="resume-link" href="John_Schlichting_Resume.pdf" download>Resume</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="top">
+  <div class="wrap">
+    <a class="back" href="index.html#projects">&larr; All projects</a>
+    <article class="project page-project" id="mte">
+      <div class="p-head">
+        <div>
+          <h1 class="p-title">Morphing Trailing Edge demonstrator</h1>
+          <p class="p-meta">Buffalo Advanced Air Transport, Smead Aerospace senior design, Prototype Team, 2025&ndash;2026</p>
+          <p class="p-pitch">A sub scale RC aircraft built to prove a morphing trailing edge works as a high lift device, part of a clean sheet transport concept targeting 50% better fuel efficiency than the 737 MAX&nbsp;8.</p>
+        </div>
+        <div class="role"><h4>My role</h4><p>I was responsible for the complete tail system, from sizing, stability analysis, CAD and hand fabrication of the entire empennage.</p></div>
+      </div>
+      <dl class="specs">
+        <div><dt>Wingspan</dt><dd>2.15 m</dd></div>
+        <div><dt>Mass</dt><dd>4.1 kg</dd></div>
+        <div><dt>Aspect ratio</dt><dd>6.82</dd></div>
+        <div><dt>Stall speed</dt><dd>9.8 m/s</dd></div>
+        <div><dt>Static margin</dt><dd>~18%</dd></div>
+        <div><dt>Successful flights</dt><dd>3</dd></div>
+      </dl>
+
+      <div class="sum summary-only">
+        <img src="flight.jpeg" alt="The MTE demonstrator in flight" data-zoom loading="lazy" style="aspect-ratio:auto;height:auto">
+        <div>
+          <h4>Key takeaways</h4>
+          <ul class="takeaways">
+            <li><b>Designed for a safe first flight.</b> Sized the vertical tail to favor a correctable spiral over Dutch roll, and accepted ~18% static margin over the 15% target.</li>
+            <li><b>Built every part of the tail myself,</b> from CNC cut NACA 0012 foam surfaces to a basswood and carbon fiber empennage box.</li>
+            <li><b>Three successful flights,</b> ending with the first in flight MTE deflection. The test pilot called it the best handling senior project airplane he&rsquo;d flown.</li>
+            <li><b>MTE validated in the wind wall:</b> over 100% C<sub>L</sub> increase at 0&deg; AoA.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2 class="dive-h">Engineering deep dive</h2>
+      <div class="full">
+        <div class="three">
+          <div>
+            <h4>What I did</h4>
+            <ul>
+              <li>Sized both stabilizers with volume coefficients: V<sub>H</sub> = 0.685, V<sub>V</sub> = 0.0403</li>
+              <li>Set CG at 0.43&nbsp;m against a neutral point at 0.487&nbsp;m over a 0.315&nbsp;m MAC</li>
+              <li>Fabricated NACA 0012 surfaces on a 4-axis CNC foam cutter</li>
+              <li>Built the basswood and carbon fiber empennage box by hand</li>
+            </ul>
+          </div>
+          <div>
+            <h4>The call I made</h4>
+            <p>I designed the tail to favor spiral instability over Dutch roll. A spiral is a slow, tightening descending turn, and a pilot can fix it with basic stick input. Dutch roll is an out of phase yaw and roll oscillation, and it's much harder to recover from. To get there, I sized the vertical stabilizer toward the upper end of the recommended range, since more vertical tail area strengthens directional stability and pushes the aircraft toward spiral.</p>
+          </div>
+          <div>
+            <h4>Result</h4>
+            <ul>
+              <li>Three successful flights, ending with the first in-flight MTE deflection</li>
+              <li>Wind wall testing showed over 100% C<sub>L</sub> increase at 0&deg; AoA, neutral to 30&deg; MTE</li>
+              <li>Over 30% C<sub>L</sub> increase at 5&deg; AoA, significant across all deflections</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="instruments">
+          <div class="panel">
+            <h4>Static margin, live</h4>
+            <p class="sub">Move the CG and see why I landed at 18%. Neutral point and MAC are the as-built values.</p>
+            <svg class="sm-svg" viewBox="0 0 600 120" role="img" aria-labelledby="sm-desc">
+              <desc id="sm-desc">Axis from 0.36 to 0.50 meters aft of the nose showing the CG position relative to the neutral point at 0.487 meters.</desc>
+              <line x1="20" y1="70" x2="580" y2="70" stroke="var(--rule)" stroke-width="2"/>
+              <g id="sm-ticks" font-size="15" fill="var(--ink-2)"></g>
+              <rect id="sm-span" y="64" height="12" rx="3" fill="color-mix(in srgb,var(--flight) 25%,transparent)"/>
+              <g id="np">
+                <line y1="30" y2="96" stroke="var(--model)" stroke-width="3"/>
+                <text y="20" text-anchor="middle" font-size="16" font-weight="700" fill="var(--model)">NP 0.487 m</text>
+              </g>
+              <g id="cg">
+                <circle cy="70" r="13" fill="var(--panel)" stroke="var(--flight)" stroke-width="3"/>
+                <path d="M0 -13 A13 13 0 0 1 13 0 L0 0 Z M0 13 A13 13 0 0 1 -13 0 L0 0 Z" transform="translate(0,70)" fill="var(--flight)"/>
+                <text id="cg-label" y="114" text-anchor="middle" font-size="16" font-weight="700" fill="var(--flight-ink)">CG</text>
+              </g>
+            </svg>
+            <div class="sm-read" aria-live="polite">
+              <span class="big num" id="sm-val">18.1%</span>
+              <span class="zone" id="sm-zone">Balanced, biased stable</span>
+            </div>
+            <p class="sm-note" id="sm-note">As flown. A little more stable than the 15% target, traded for confidence on a first flight.</p>
+            <label for="cg-range" class="sub" style="display:block;margin:0">CG position aft of nose</label>
+            <input id="cg-range" type="range" min="0.380" max="0.484" step="0.001" value="0.430" aria-describedby="sm-note">
+            <div class="row">
+              <div class="legend"><span><i style="background:var(--model)"></i>Model: neutral point</span><span><i style="background:var(--flight)"></i>Flight: CG</span></div>
+              <button class="linkbtn" type="button" id="sm-reset">Back to as-flown</button>
+            </div>
+          </div>
+          <div class="panel">
+            <h4>Tail sizing vs. recommended range</h4>
+            <p class="sub">Light aircraft guidance shaded in blue, my values in orange.</p>
+            <div class="gauge">
+              <div class="lbl"><span>Horizontal, V<sub>H</sub></span><b>0.685</b></div>
+              <div class="track"><div class="band" style="left:25%;width:50%"></div><div class="mark" style="left:60.63%"></div></div>
+              <div class="ticks"><span>0.2</span><span>0.4</span><span>0.6</span><span>0.8</span><span>1.0</span></div>
+            </div>
+            <div class="gauge">
+              <div class="lbl"><span>Vertical, V<sub>V</sub></span><b>0.0403</b></div>
+              <div class="track"><div class="band" style="left:16.67%;width:50%"></div><div class="mark" style="left:50.5%"></div></div>
+              <div class="ticks"><span>0.01</span><span>0.025</span><span>0.04</span><span>0.055</span><span>0.07</span></div>
+            </div>
+            <p class="sub" style="margin:0">Both tail volumes sit high in their ranges on purpose. V<sub>H</sub> and V<sub>V</sub> give strong pitch and yaw authority and extra stability, and high V<sub>V</sub> pushes the aircraft toward a correctable spiral over Dutch roll. A tip mounted camera requirement, pushed V<sub>V</sub> higher and put more weight aft, so I used a 0.6 taper ratio on the vertical stabilizer to help reduce weight and induced drag.</p>
+          </div>
+        </div>
+
+        <div class="instruments alt">
+          <div class="panel">
+            <h4>Flight log</h4>
+            <p class="sub">Each flight expanded the envelope one step.</p>
+            <ol class="log">
+              <li><span class="n">Flight 1<small>Success</small></span><p>CU Flight Ops airworthiness check. Stable pattern, trim established.</p></li>
+              <li><span class="n">Flight 2<small>Success</small></span><p>Test pilot handoff. Roll, pitch, and yaw authority demonstrated, positive static and dynamic stability. Camera mount added to the vertical stabilizer.</p></li>
+              <li><span class="n">Flight 3<small>Success</small><small class="warn">Anomaly logged</small></span><p>First MTE deflection at 20&deg; with GPS telemetry. A torsional aeroelastic event occurred under high speed asymmetric MTE loading.</p></li>
+            </ol>
+          </div>
+          <div class="panel">
+            <h4>First takeoff</h4>
+            <p class="sub">Flight 1, CU Flight Ops airworthiness check.</p>
+            <video controls preload="none" playsinline poster="flight.jpeg" style="width:100%;border-radius:10px;background:#000;aspect-ratio:16/9;object-fit:contain">
+              <source src="first_flight.mov" type="video/mp4">
+              <source src="first_flight.mov" type="video/quicktime">
+            </video>
+          </div>
+        </div>
+
+        <div class="media">
+          <figure class="s4"><div class="frame"><img src="tailCAD.png" alt="Onshape CAD model of the tail assembly" loading="lazy" data-zoom></div><figcaption>Tail assembly in Onshape</figcaption></figure>
+          <figure class="s4 fit"><div class="frame"><img src="tail.jpeg" alt="The finished tail assembly, fabricated by hand" loading="lazy" data-zoom></div><figcaption>Finished tail, fabricated by hand</figcaption></figure>
+          <figure class="s4"><div class="frame"><img src="MTEteam.jpeg" alt="The Prototype and IT teams with the aircraft" loading="lazy" data-zoom></div><figcaption>Prototype and IT teams</figcaption></figure>
+        </div>
+
+        <div class="writeup">
+          <h4>Design notes</h4>
+          <div class="cols">
+            <div><h5>Every tail decision moves the CG</h5><p>A bigger horizontal stabilizer buys pitch authority but adds weight far aft, eroding static margin. A bigger vertical guards against Dutch roll at the same penalty. I sized both against light aircraft ranges: <strong>V<sub>H</sub> 0.685</strong> in 0.4&ndash;0.8 and <strong>V<sub>V</sub> 0.0403</strong> in 0.02&ndash;0.05.</p></div>
+            <div><h5>Why 18% and not 15%</h5><p>Too stable and the aircraft goes sluggish, damping the pitch response we needed to measure MTE effects. Too little and gusts cause outsized pitch reactions on an untested airframe. The extra margin was a deliberate trade.</p></div>
+            <div><h5>Airfoil</h5><p>NACA 0012 on both surfaces, symmetric, so zero pitching moment at zero AoA, and well documented at our low Reynolds numbers.</p></div>
+            <div><h5>Structure</h5><p>Lifting surface spars pass through and intersect the main carbon spar rather than stopping at it, improving load transfer in bending and torsion. The CNC cut spar channels in the same pass as the airfoil, so their locations were exact. Control surfaces hang on continuous living hinges.</p></div>
+            <div><h5>A gap I caught in assembly</h5><p>I hadn&rsquo;t allocated a servo mount. I added a basswood block forward of the empennage box for a rigid mount with short, direct linkages.</p></div>
+            <div><h5>Wind wall validation</h5><p>Custom load cell stand at Re &asymp; 155,000. Over 100% C<sub>L</sub> increase at 0&deg; AoA from neutral to 30&deg; MTE, and over 30% at 5&deg; AoA, statistically significant across all deflection angles.</p></div>
+          </div>
+        </div>
+      </div>
+    </article>
+    <nav class="pn" aria-label="More projects"><span></span><a class="pn-next" href="wind-tunnel.html"><span>Next project</span><b>Subscale Wind Tunnel &mdash; Design, Build, and CFD Study</b></a></nav>
+  </div>
+</main>
+
+<section class="contact" id="contact" aria-labelledby="ct-t">
+  <div class="wrap">
+    <h2 id="ct-t">Let&rsquo;s build the next one.</h2>
+    <p>Boulder, CO. Available now and open to relocation.</p>
+    <div class="cta">
+      <a class="btn primary" href="mailto:johnschlichting101@gmail.com">johnschlichting101@gmail.com</a>
+      <a class="btn" href="https://linkedin.com/in/john-schlichting" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="tel:+17205395266">720-539-5266</a>
+      <a class="btn" href="John_Schlichting_Resume.pdf" download>Download resume</a>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">&copy; 2026 John Schlichting</div></footer>
+
+<dialog class="lb" id="lb" aria-label="Enlarged image">
+  <button type="button" id="lb-close">Close</button>
+  <img id="lb-img" alt="">
+  <p id="lb-cap"></p>
+</dialog>
+
+<script src="site.js"></script>
+<script>
+(function(){
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* ---------- Static margin ---------- */
+  var NP=0.487, MAC=0.315, X0=0.36, X1=0.50, P0=30, P1=570;
+  function px(x){return P0+(x-X0)/(X1-X0)*(P1-P0)}
+  var ticks=document.getElementById('sm-ticks');
+  for(var t=0.36;t<=0.5001;t+=0.02){
+    var x=px(t);
+    ticks.insertAdjacentHTML('beforeend','<line x1="'+x+'" x2="'+x+'" y1="64" y2="76" stroke="var(--rule)" stroke-width="2"/><text x="'+x+'" y="54" text-anchor="middle">'+t.toFixed(2)+'</text>');
+  }
+  var npG=document.getElementById('np'), npL=npG.querySelector('line');
+  npL.setAttribute('x1',px(NP));npL.setAttribute('x2',px(NP));npG.querySelector('text').setAttribute('x',px(NP));
+  var range=document.getElementById('cg-range'), cg=document.getElementById('cg'),
+      span=document.getElementById('sm-span'), val=document.getElementById('sm-val'),
+      zone=document.getElementById('sm-zone'), note=document.getElementById('sm-note'),
+      lbl=document.getElementById('cg-label');
+  function update(){
+    var c=parseFloat(range.value), sm=(NP-c)/MAC*100;
+    cg.setAttribute('transform','translate('+px(c)+',0)');
+    lbl.textContent='CG '+c.toFixed(3)+' m';
+    span.setAttribute('x',px(c));span.setAttribute('width',Math.max(0,px(NP)-px(c)));
+    val.textContent=sm.toFixed(1)+'%';
+    var z,n;
+    if(Math.abs(c-0.430)<0.0005){z='Balanced, biased stable';n='As flown. A little more stable than the 15% target, traded for confidence on a first flight.';}
+    else if(sm<8){z='Twitchy';n='Gusts and small stick inputs produce exaggerated pitch reactions. Hard to trim, real loss-of-control risk on a first flight.';}
+    else if(sm<14){z='Responsive';n='Lively in pitch. Fine on a proven airframe, less forgiving on a hand-built first flight.';}
+    else if(sm<=20){z='Balanced';n='The window I targeted: stable enough to trust, responsive enough to measure how MTE deflection changes pitch behavior.';}
+    else if(sm<=26){z='Stable, getting heavy';n='Needs larger control inputs. Starts to damp the pitch response the MTE test was built to capture.';}
+    else {z='Sluggish';n='Very large inputs for modest pitch response. Safe, but it would mask the MTE data we came to collect.';}
+    zone.textContent=z;note.textContent=n;
+  }
+  range.addEventListener('input',update);
+  document.getElementById('sm-reset').addEventListener('click',function(){range.value='0.430';update();});
+  update();
+})();
+</script>
+</body>
+</html>
